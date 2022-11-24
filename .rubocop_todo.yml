@@ -184,3 +184,8 @@ Style/SymbolArray:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 198
+
+# Configuration parameters: Prefixes.
+# Prefixes: when, with, without
+RSpec/ContextWording:
+  Enabled: false

@@ -77,6 +77,9 @@ GEM
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
     erubi (1.11.0)
+    fabrication (2.30.0)
+    faker (3.0.0)
+      i18n (>= 1.8.11, < 2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -184,6 +187,8 @@ GEM
     rubocop-rspec (2.15.0)
       rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
+    shoulda-matchers (5.2.0)
+      activesupport (>= 5.2.0)
     thor (1.2.1)
     timeout (0.3.0)
     tzinfo (2.0.5)
@@ -200,12 +205,15 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
+  fabrication
+  faker
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4)
   rspec-rails
   rubocop-rails
   rubocop-rspec
+  shoulda-matchers
   tzinfo-data
 
 RUBY VERSION
