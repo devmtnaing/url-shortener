@@ -122,7 +122,7 @@ Style/ExpandPathArguments:
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: always, always_true, never
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: True
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
