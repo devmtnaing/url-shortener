@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Link do
@@ -24,9 +26,7 @@ RSpec.describe Link do
       end
 
       it "does not update shortened_url if it is already present" do
-        shortened_url = link.shortened_url
         expect { link.update!(original_url: "https://www.google.com") }.not_to change(link, :shortened_url)
-        expect(link.shortened_url).to eq(shortened_url)
       end
     end
   end

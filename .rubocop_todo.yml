@@ -105,11 +105,7 @@ Style/ClassAndModuleChildren:
 # Offense count: 2
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'config/application.rb'
-    - 'db/migrate/20221124074954_create_links.rb'
+  Enabled: False
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

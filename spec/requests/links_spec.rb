@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "links" do
@@ -8,8 +10,12 @@ RSpec.describe "links" do
 
     context "when the request is valid" do
       it "returns correct response" do
-        expect { request }.to change { Link.count }.by(1)
+        request
         expect(response).to have_http_status(:created)
+      end
+
+      it "creates an Link record" do
+        expect { request }.to change(Link, :count).by(1)
       end
     end
 
