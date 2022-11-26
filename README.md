@@ -31,6 +31,10 @@ ShortLink is a URL shortening service where you enter a URL such as https://code
 - Security: have you thought through potential issues and mitigated or documented them?
 - Scalability: what scalability issues do you foresee in your implementation and how do you plan to work around those issues?
 
+### Details Instructions
+
+Details instructions on how to run can be found under [GUIDE.md](GUIDE.md)
+
 ### Potential attack vectors
 
 - phising, malewares and any kind of malicious links could get unknowingly accessed by end users via shortened url. The harmful link can hide behind the shortened_ur from any well-respected shortening url service providers. To mitigate this, service provider should implement background crwaling and flagging harmful links to ensure the removal of those malicious links from the system ASAP.
