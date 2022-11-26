@@ -9,18 +9,22 @@ RSpec.describe "links" do
     let(:request) { post url, params: params }
 
     context "when the request is valid" do
-      it "returns correct response" do
-        request
-        expect(response).to have_http_status(:created)
+      shared_examples_for "successful creation" do
+        it "creates a new link with shortened_url" do
+          expect { request }.to change(Link, :count).by(1)
+          expect(JSON.parse(response.body)["shortened_url"]).not_to be_nil
+        end
       end
 
-      it "creates an Link record" do
-        expect { request }.to change(Link, :count).by(1)
+      Link::SUPPORTED_ORIGIN_AND_EXPECTED_URLS.each do |k, v|
+        it_behaves_like "successful creation" do
+          let(:params) { { original_url: k } }
+        end
       end
     end
 
     context "when the request is invalid" do
-      let(:params) { nil }
+      let(:params) { { original_url: "/abcd" } }
 
       it "raises error" do
         request
