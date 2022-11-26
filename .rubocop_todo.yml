@@ -57,6 +57,9 @@ RSpec/ContextWording:
   Exclude:
     - 'spec/models/link_spec.rb'
 
+Rspec/MultipleExpectations:
+  Max: 2
+
 # Offense count: 15
 # Configuration parameters: AllowedGroups.
 RSpec/NestedGroups:
@@ -80,12 +83,7 @@ Style/ClassAndModuleChildren:
 # Offense count: 5
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/links_controller.rb'
-    - 'app/models/link.rb'
-    - 'config/application.rb'
-    - 'db/migrate/20221124074954_create_links.rb'
+  Enabled: false
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

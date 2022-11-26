@@ -16,7 +16,7 @@ RSpec.describe "links" do
         end
       end
 
-      Link::SUPPORTED_ORIGIN_AND_EXPECTED_URLS.each do |k, v|
+      Link::SUPPORTED_ORIGIN_AND_EXPECTED_URLS.each do |k, _v|
         it_behaves_like "successful creation" do
           let(:params) { { original_url: k } }
         end
