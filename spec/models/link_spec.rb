@@ -42,85 +42,10 @@ RSpec.describe Link do
         end
 
         context "when the original_url is valid" do
-          context "with full path without www" do
+          Link::SUPPORTED_ORIGIN_AND_EXPECTED_URLS.each do |k, v|
             it_behaves_like "formatted original url" do
-              let(:original_url) { "http://fake.com" }
-              let(:expected_url) { "http://fake.com" }
-            end
-          end
-
-          context "with full path including www" do
-            it_behaves_like "formatted original url" do
-              let(:original_url) { "http://www.fake.com" }
-              let(:expected_url) { "http://www.fake.com" }
-            end
-          end
-
-          context "with full path including www and using https" do
-            it_behaves_like "formatted original url" do
-              let(:original_url) { "https://www.fake.com" }
-              let(:expected_url) { "https://www.fake.com" }
-            end
-          end
-
-          context "without proper http scheme" do
-            context "without www" do
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "fake.com" }
-                let(:expected_url) { "http://fake.com" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "fake.abcdfakeagain" }
-                let(:expected_url) { "http://fake.abcdfakeagain" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "fake.com/test_api" }
-                let(:expected_url) { "http://fake.com/test_api" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "//fake.com" }
-                let(:expected_url) { "http://fake.com" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "://fake.com" }
-                let(:expected_url) { "http://fake.com" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "htp://fake.com" }
-                let(:expected_url) { "http://fake.com" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "http//fake.com" }
-                let(:expected_url) { "http://fake.com" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "https//fake.com" }
-                let(:expected_url) { "https://fake.com" }
-              end
-            end
-
-            context "with www" do
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "www.fake.com" }
-                let(:expected_url) { "http://www.fake.com" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "www.fake" }
-                let(:expected_url) { "http://www.fake" }
-              end
-
-              it_behaves_like "formatted original url" do
-                let(:original_url) { "www.fake.com/test_api" }
-                let(:expected_url) { "http://www.fake.com/test_api" }
-              end
+              let(:original_url) { k }
+              let(:expected_url) { v }
             end
           end
         end

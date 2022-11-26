@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 class Link < ApplicationRecord
+  SUPPORTED_ORIGIN_AND_EXPECTED_URLS = { 
+    "http://fake.com": "http://fake.com",
+    "http://www.fake.com": "http://www.fake.com",
+    "https://www.fake.com": "https://www.fake.com",
+    "fake.com": "http://fake.com",
+    "fake.abcdfakeagain": "http://fake.abcdfakeagain",
+    "fake.com/test_api": "http://fake.com/test_api",
+    "//fake.com": "http://fake.com",
+    "://fake.com": "http://fake.com",
+    "htp://fake.com": "http://fake.com",
+    "http//fake.com": "http://fake.com",
+    "https//fake.com": "https://fake.com",
+    "www.fake.com": "http://www.fake.com",
+    "www.fake": "http://www.fake",
+    "www.fake.com/test_api": "http://www.fake.com/test_api",
+  }.freeze
+
   validates :original_url, presence: true
   validates :shortened_url, uniqueness: true
 
