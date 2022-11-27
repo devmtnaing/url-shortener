@@ -36,6 +36,7 @@ RSpec.describe Link do
 
         shared_examples_for "formatted original url" do
           let(:link) { Fabricate.create(:link, original_url: original_url) }
+
           it "returns the formatted original url" do
             expect(link.original_url).to eq expected_url
           end
@@ -49,22 +50,40 @@ RSpec.describe Link do
             end
           end
         end
+      end
 
-        context "when the original_url is invalid" do
-          shared_examples_for "raise record invalid error" do
-            it "returns the formatted original url" do
+      describe ".validate_formatted_url" do
+        shared_examples_for "successfully validated" do
+          let(:original_url) { Faker::Internet.url }
+
+          it "creates a link record" do
+            expect { Fabricate.create(:link, original_url: original_url) }.to change(Link, :count).by(1)
+          end
+        end
+
+        context "when the formatted url is valid" do
+          Link::SUPPORTED_ORIGIN_AND_EXPECTED_URLS.each do |_k, v|
+            it_behaves_like "successfully validated" do
+              let(:original_url) { v }
+            end
+          end
+        end
+
+        context "when the formatted_url is invalid" do
+          shared_examples_for "failed validation" do
+            it "raise error" do
               expect { Fabricate.create(:link, original_url: original_url) }.to raise_error(ActiveRecord::RecordInvalid)
             end
           end
 
           context "without proper domain" do
-            it_behaves_like "raise record invalid error" do
+            it_behaves_like "failed validation" do
               let(:original_url) { "http://fake" }
             end
           end
 
           context "with wrong http scheme" do
-            it_behaves_like "raise record invalid error" do
+            it_behaves_like "failed validation" do
               let(:original_url) { "/fake.com" }
             end
           end

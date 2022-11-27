@@ -21,17 +21,19 @@ class Link < ApplicationRecord
   validates :original_url, presence: true
   validates :shortened_url, uniqueness: true
 
-  before_create :format_original_url, :generate_shortened_url
+  before_create :format_original_url, :validate_formatted_url, :generate_shortened_url
 
   private
+
+  def format_original_url
+    self.original_url = Url::Formatter.new(original_url).call
+  end
 
   def generate_shortened_url
     self.shortened_url = SecureRandom.base58(6)
   end
 
-  def format_original_url
-    self.original_url = Url::Formatter.new(original_url).call
-
+  def validate_formatted_url
     raise ActiveRecord::RecordInvalid unless Url::Validator.new(original_url).valid?
   end
 end
