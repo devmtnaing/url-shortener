@@ -30,7 +30,11 @@ class Link < ApplicationRecord
   end
 
   def generate_shortened_url
-    self.shortened_url = SecureRandom.base58(6)
+    self.shortened_url = Url::Shortener.new(original_url).generate_unique_key
+
+    while self.class.exists?(shortened_url: shortened_url)
+      self.shortened_url = Url::Shortener.new(original_url).generate_unique_key
+    end
   end
 
   def validate_formatted_url

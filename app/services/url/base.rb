@@ -7,8 +7,9 @@ module Url
 
     DEFAULT_SCHEME = "http"
 
-    def initialize(url)
+    def initialize(url, options = {})
       @url = url
+      @options = options
     end
   end
 end

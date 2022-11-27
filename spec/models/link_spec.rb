@@ -57,7 +57,7 @@ RSpec.describe Link do
           let(:original_url) { Faker::Internet.url }
 
           it "creates a link record" do
-            expect { Fabricate.create(:link, original_url: original_url) }.to change(Link, :count).by(1)
+            expect { Fabricate.create(:link, original_url: original_url) }.to change(described_class, :count).by(1)
           end
         end
 

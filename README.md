@@ -42,13 +42,17 @@ Details instructions on how to run can be found under [GUIDE.md](GUIDE.md)
 
 ### Scalability
 
-- Track annonymous users via cookies and return the same existing hash for any long_url that has already been shortened by this particular user.
-- I have already added database index on the shortened_urls so that `/decode` endpoint should be fast. However, If we have so much data and so many rquests, it would add up and become slow. I should add caching layer in that case. Preferable redis with Least Recently Used eviction mechanism.
-- There is now a unique key for the shortened_url at database level, but now many users could endup failing to create shortened URLs due to inability to obtain unique key. Even unique key could be generated it would take a long time to generate one as database records start to grow. In that case, I should start pre-populating unique keys for daily use somewhere in the database and each request would lock one from that pool and mark it as used.
-- When the service become to attrack facebook level traffic then the above solution would still work but require way better infra such as:
+- User oriented url shortening
+- Save storage by tracking annonymous users via cookies and return the same existing hash for any long_url that has already been shortened by this particular user.
+- Database index on the shortened_urls has already been added so that `/decode` endpoint should be somewhat faster to fetch.
+  However, large traffic of read would still add up and slow down the response time in total, whereby putting too much workload on the database.
+  In that case, caching layer would be a goto solution. Preferable redis with Least Recently Used eviction mechanism.
+- Generation of unique_key could be improved alot. Current implementation has no retry mechanism. It will check uniqueness of the newly generated key unti it is actually unique to be saved in database. It could end up in request timing out and many database connetions being used up and occupied. Firstly, retry mechanism should be implemented.
+  However, some users could still end up getting a API error message of not being able to obtain an unique key after a few retries which lead of bad user experience. In that case, based on the average write load of the system, we should be pre-populating unique keys in the database and each request would lock one from the pool and mark it as used.
+- When the service become to attract facebook level traffic then the above solution would still work but require way better infra such as:
   - Load Balancers between client - server, server - database, server - cache server.
-  - some pre-populated unique keys should also be moved from database level to memory level for even faster access
-  - Database partitioning would become very crucial at this stage. They pre-populated unique keys can even rely on the partitioning logic of database.
+  - some pre-populated unique keys should also be moved from database to memory level for even faster access
+  - Database partitioning would become very crucial at this stage. The pre-populated unique keys can even rely on the partitioning logic of the database. Server A would have database partation of say 0 - 1000000. Server A would have its own deticated caching layer and prepoluated unique keys should be moved to application server related database and cache servers.
   - With all that infra, reliabality and synchronization of those servers become the most importantance.
 
 ### CodeSubmit
